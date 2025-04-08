@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, StatusBar} from "react-native";
+import { Text, View, StyleSheet, StatusBar, Alert} from "react-native";
 import React from 'react';
 import * as Location from 'expo-location';
 import Loading from "./loading";
@@ -6,8 +6,15 @@ import Loading from "./loading";
 export default class extends React.Component {
 
   GetLocation = async () => {
-    const location = await Location.getCurrentPositionAsync()
-    console.log(location)
+    try {
+      const response = await Location.requestForegroundPermissionsAsync()
+      console.log(response)
+      const location = await Location.getCurrentPositionAsync()
+      console.log(location)
+    } catch (error) {
+      Alert.alert('Не могу определить местоположение', ":(")
+    }
+    
   }
   componentDidMount(): void {
     this.GetLocation()
