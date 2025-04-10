@@ -2,10 +2,11 @@ import { Text, View, StyleSheet } from "react-native";
 
 export default function loading() {
     return (
-      <View
-        style={styles.container}
-      >
-        <Text>Получение данных о погоде...</Text>
+      <View style={styles.container} >
+        <View style={styles.textContainer}>
+          <Text>Получение данных о погоде...</Text>
+        </View>
+        <View style={styles.subContainer} ></View>
       </View>
     );
   }
@@ -15,5 +16,13 @@ export default function loading() {
       flex: 1,
       justifyContent: "center",
       alignItems: "center",
+    },
+    textContainer: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    subContainer: {
+      flex: 3
     }
   })
