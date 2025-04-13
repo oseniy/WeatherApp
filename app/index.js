@@ -39,7 +39,6 @@ export default class extends React.Component {
     const {isLoading, temp, description} = this.state
     return (
     <View style={styles.container}>
-      <StatusBar backgroundColor="#87CEFA" barStyle="dark-content" />
       {isLoading ? <Loading /> : <Weather temp={Math.round(temp)} description={description}/>}
     </View>
     );
@@ -50,8 +49,6 @@ export default class extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#87CEFA"
+    backgroundColor: "#9932CC"
   }
 })

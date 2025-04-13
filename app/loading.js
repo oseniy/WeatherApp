@@ -1,8 +1,9 @@
-import { Text, View, StyleSheet } from "react-native";
+import { Text, View, StyleSheet, StatusBar } from "react-native";
 
 export default function loading() {
     return (
       <View style={styles.container} >
+        <StatusBar barStyle="dark-content" />
         <View style={styles.textContainer}>
           <Text>Получение данных о погоде...</Text>
         </View>
@@ -16,6 +17,8 @@ export default function loading() {
       flex: 1,
       justifyContent: "center",
       alignItems: "center",
+      backgroundColor: "#87CEFA"
+      
     },
     textContainer: {
       flex: 1,
