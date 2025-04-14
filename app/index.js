@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, StatusBar, Alert} from "react-native";
+import { Text, View, StyleSheet, Alert} from "react-native";
 import React from 'react';
 import * as Location from 'expo-location';
 import axios from 'axios'
@@ -17,8 +17,9 @@ export default class extends React.Component {
     console.log('getWeather started')
     const {data: {main: {temp}, weather}} = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`)
     const description = weather[0].description
-    console.log(temp, description)
-    this.setState({isLoading: false, temp: temp, description: description })
+    const weatherMain = weather[0].main
+    console.log(temp, description, weatherMain)
+    this.setState({isLoading: false, temp, description, weatherMain })
   }  
 
   GetData = async () => {
@@ -36,10 +37,10 @@ export default class extends React.Component {
   }
 
   render () {
-    const {isLoading, temp, description} = this.state
+    const {isLoading, temp, description, weatherMain} = this.state
     return (
     <View style={styles.container}>
-      {isLoading ? <Loading /> : <Weather temp={Math.round(temp)} description={description}/>}
+      {isLoading ? <Loading /> : <Weather temp={Math.round(temp)} description={description} weatherMain={weatherMain}/>}
     </View>
     );
   }
@@ -49,6 +50,5 @@ export default class extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#9932CC"
   }
 })

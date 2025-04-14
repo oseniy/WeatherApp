@@ -1,11 +1,31 @@
 import { Text, View, StyleSheet, StatusBar } from "react-native";
+import React, { useState, useEffect } from 'react';
+
+function dots() {
+
+}
 
 export default function loading() {
+
+  const [dots, setDots] = useState('...');
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDots(prev => {
+        if (prev === '...') return '.';
+        return prev + '.';
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
     return (
       <View style={styles.container} >
-        <StatusBar barStyle="dark-content" />
+        <StatusBar barStyle="dark-content" backgroundColor="#87CEFA"/>
         <View style={styles.textContainer}>
-          <Text>Получение данных о погоде...</Text>
+          <Text style={styles.text}>Получение данных о погоде</Text>
+          <Text style={styles.dots}>{dots}</Text>
         </View>
         <View style={styles.subContainer} ></View>
       </View>
@@ -27,5 +47,13 @@ export default function loading() {
     },
     subContainer: {
       flex: 3
+    },
+    text: {
+      fontSize: 22,
+      color: "white"
+    },
+    dots: {
+      fontSize: 32,
+      color: "white"      
     }
   })
