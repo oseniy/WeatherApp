@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Text, View, StyleSheet, StatusBar } from "react-native";
 import Ionicons from '@expo/vector-icons/Ionicons';
-
 import { LinearGradient } from 'expo-linear-gradient'; 
+import DayWeather from "./dayWeather"
 
 
 const weatherOptions = {
@@ -37,12 +37,9 @@ const weatherOptions = {
     },
 }
 
-const test = 'Thunderstorm'
-
 export default function Weather({temp, description, weatherMain}) {
     return (
             <LinearGradient
-            // Background Linear Gradient
             colors={weatherOptions[weatherMain].backgroundColor}
             style={styles.container}
             > 
@@ -53,7 +50,7 @@ export default function Weather({temp, description, weatherMain}) {
                     <Text style={styles.text} >{description}</Text>
                 </View>
                 <View style={styles.lower_container}>
-
+                    <DayWeather />
                 </View>
             </LinearGradient>
     )
@@ -68,21 +65,15 @@ Weather.propTypes = {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
     },
     upper_container: {
         flex: 1,   
         justifyContent: "center",
         alignItems: "center",
-
     },
     lower_container: {
         flex: 2
     },
-    background: {
-        flex: 1,
-      },
     temp: {
         fontSize: 42,
         color: "white"

@@ -9,17 +9,53 @@ const API_KEY = '32da35c7fdfa601889d7046e111d7cd3'
 
 export default function App() {
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [temp, setTemp] = useState(null);
-  const [description, setDescription] = useState('');
-  const [weatherMain, setWeatherMain] = useState('');
+  const [isLoading, setIsLoading] = useState(true)
+  const [temp, setTemp] = useState(null)
+  const [description, setDescription] = useState('')
+  const [weatherMain, setWeatherMain] = useState('')
+  const [daysData, setDaysData] = useState('')
 
   const getWeather = async (latitude, longitude) => {
     console.log('getWeather started')
+
     const {data: {main: {temp}, weather}} = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`)
+    console.log('got data')
+
     setTemp(temp)
     setDescription(weather[0].description)
     setWeatherMain(weather[0].main)
+    console.log('set states')
+
+    const {data: {list}} = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`)
+    console.log('got data2')
+
+
+    function getDailyAverages(list) {
+      const result = [];
+    
+      for (let i = 0; i < 40; i += 8) {
+        const dayGroup = list.slice(i, i + 8);
+        const avgTemp =
+          dayGroup.reduce((sum, item) => sum + item.main.temp, 0) / dayGroup.length;
+        result.push(Math.round(avgTemp));
+      }
+    
+      return result;
+    }
+    
+    const averageTemps = getDailyAverages(list);
+    
+    const daysData = Array.from({ length: 5 }, (_, i) => {
+      const item = list[i * 8];
+      return {
+        dt: item.dt,
+        temp: averageTemps[i],
+        main: item.weather[0].main,
+        description: item.weather[0].description
+      };
+    });
+    console.log(daysData)
+    setDaysData(daysData)
     setIsLoading(false)
     console.log(temp, weather[0].description, weather[0].main)
   }  
