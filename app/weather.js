@@ -37,7 +37,7 @@ const weatherOptions = {
     },
 }
 
-export default function Weather({temp, description, weatherMain}) {
+export default function Weather({temp, description, weatherMain, daysData}) {
     return (
             <LinearGradient
             colors={weatherOptions[weatherMain].backgroundColor}
@@ -50,7 +50,7 @@ export default function Weather({temp, description, weatherMain}) {
                     <Text style={styles.text} >{description}</Text>
                 </View>
                 <View style={styles.lower_container}>
-                    <DayWeather />
+                    <DayWeather daysData={daysData}/>
                 </View>
             </LinearGradient>
     )
@@ -60,6 +60,7 @@ Weather.propTypes = {
     temp: PropTypes.number.isRequired,
     description: PropTypes.string.isRequired,
     weatherMain: PropTypes.string.isRequired,
+    daysData: PropTypes.array.isRequired,
 }
 
 const styles = StyleSheet.create({

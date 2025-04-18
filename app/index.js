@@ -33,7 +33,7 @@ export default function App() {
     function getDailyAverages(list) {
       const result = [];
     
-      for (let i = 0; i < 40; i += 8) {
+      for (let i = 8; i < 40; i += 8) {
         const dayGroup = list.slice(i, i + 8);
         const avgTemp =
           dayGroup.reduce((sum, item) => sum + item.main.temp, 0) / dayGroup.length;
@@ -44,9 +44,10 @@ export default function App() {
     }
     
     const averageTemps = getDailyAverages(list);
-    
-    const daysData = Array.from({ length: 5 }, (_, i) => {
-      const item = list[i * 8];
+    console.log(averageTemps)
+    const daysData = Array.from({ length: 4 }, (_, i) => {
+      const index = (i + 1) * 8;
+      const item = list[index];
       return {
         dt: item.dt,
         temp: averageTemps[i],
@@ -77,7 +78,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      {isLoading ? <Loading /> : <Weather temp={Math.round(temp)} description={description} weatherMain={weatherMain}/>}
+      {isLoading ? <Loading /> : <Weather temp={Math.round(temp)} description={description} weatherMain={weatherMain} daysData={daysData}/>}
     </View>
   ) 
   
