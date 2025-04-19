@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Alert} from "react-native";
+import { View, StyleSheet, Alert} from "react-native";
 import React, { useState, useEffect } from 'react';
 import * as Location from 'expo-location';
 import axios from 'axios'
@@ -23,9 +23,7 @@ function getDailyAverages(list) {
 export default function App() {
 
   const [isLoading, setIsLoading] = useState(true)
-  const [temp, setTemp] = useState(null)
-  const [description, setDescription] = useState('')
-  const [weatherMain, setWeatherMain] = useState('')
+  const [currentWeather, setCurrentWeather] = useState({temp: null, description: '', main: ''})
   const [daysData, setDaysData] = useState('')
 
   const getWeather = async (latitude, longitude) => {
@@ -34,9 +32,12 @@ export default function App() {
     const {data: {main: {temp}, weather}} = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`)
     console.log('got data')
 
-    setTemp(temp)
-    setDescription(weather[0].description)
-    setWeatherMain(weather[0].main)
+
+    setCurrentWeather({
+      temp: Math.round(temp),
+      description: weather[0].description,
+      main: weather[0].main
+    })
     console.log('set states')
 
     const {data: {list}} = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`)
@@ -77,7 +78,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      {isLoading ? <Loading /> : <Weather temp={Math.round(temp)} description={description} weatherMain={weatherMain} daysData={daysData}/>}
+      {isLoading ? <Loading /> : <Weather temp={currentWeather.temp} description={currentWeather.description} weatherMain={currentWeather.main} daysData={daysData}/>}
     </View>
   ) 
   
