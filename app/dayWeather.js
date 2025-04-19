@@ -12,75 +12,35 @@ const weatherOptions = {
     Clouds: 'cloud',
 }
 
-export default function DayWeather({daysData}) {
+function formatUnixDate(unixTimestamp) {
+    const date = new Date(unixTimestamp * 1000);
+  
+    const weekday = date.toLocaleDateString('en-US', { weekday: 'short' });
+    const dayMonth = date.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
+  
+    return `${weekday}\n${dayMonth}`;
+}
 
-    function formatUnixDate(unixTimestamp) {
-        const date = new Date(unixTimestamp * 1000);
-      
-        const weekday = date.toLocaleDateString('en-US', { weekday: 'short' });
-        const dayMonth = date.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
-      
-        return `${weekday}\n${dayMonth}`;
-      }
+export default function DayWeather({daysData}) {
 
     return (
         <View style={styles.container}>
-            <View style={styles.day}>
-                <View style={styles.date}>
-                    <Text style={styles.text}>{formatUnixDate(daysData[0].dt)}</Text>
+            {daysData.map((day, i) => (
+                <View key={i} style={styles.day}>
+                    <View style={styles.date}>
+                        <Text style={styles.text}>{formatUnixDate(day.dt)}</Text>
+                    </View>
+                    <View style={styles.temp}>
+                        <Text style={styles.temp_text}>{day.temp}°</Text>
+                    </View>
+                    <View style={styles.description}>
+                        <Text style={styles.text}>{day.description}</Text>
+                    </View>
+                    <View style={styles.icon}>
+                        <Ionicons name={weatherOptions[day.main]} size={56} color="white" />
+                    </View>
                 </View>
-                <View style={styles.temp}>
-                    <Text style={styles.temp_text}>{daysData[0].temp}°</Text>
-                </View>
-                <View style={styles.description}>
-                    <Text style={styles.text}>{daysData[0].description}</Text>
-                </View>
-                <View style={styles.icon}>
-                    <Ionicons name={weatherOptions[daysData[0].main]} size={56} color="white" />
-                </View>
-            </View>
-            <View style={styles.day}>
-                <View style={styles.date}>
-                    <Text style={styles.text}>{formatUnixDate(daysData[1].dt)}</Text>
-                </View>
-                <View style={styles.temp}>
-                    <Text style={styles.temp_text}>{daysData[1].temp}°</Text>
-                </View>
-                <View style={styles.description}>
-                    <Text style={styles.text}>{daysData[1].description}</Text>
-                </View>
-                <View style={styles.icon}>
-                    <Ionicons name={weatherOptions[daysData[1].main]} size={56} color="white" />
-                </View>
-            </View>
-            <View style={styles.day}>
-                <View style={styles.date}>
-                    <Text style={styles.text}>{formatUnixDate(daysData[2].dt)}</Text>
-                </View>
-                <View style={styles.temp}>
-                    <Text style={styles.temp_text}>{daysData[2].temp}°</Text>
-                </View>
-                <View style={styles.description}>
-                    <Text style={styles.text}>{daysData[2].description}</Text>
-                </View>
-                <View style={styles.icon}>
-                    <Ionicons name={weatherOptions[daysData[2].main]} size={56} color="white" />
-                </View>
-            </View>
-            <View style={styles.day}>
-                <View style={styles.date}>
-                    <Text style={styles.text}>{formatUnixDate(daysData[3].dt)}</Text>
-                </View>
-                <View style={styles.temp}>
-                    <Text style={styles.temp_text}>{daysData[3].temp}°</Text>
-                </View>
-                <View style={styles.description}>
-                    <Text style={styles.text}>{daysData[3].description}</Text>
-                </View>
-                <View style={styles.icon}>
-                    <Ionicons name={weatherOptions[daysData[3].main]} size={56} color="white" />
-                </View>
-            </View>
+            ))}
         </View>
     )
 }
@@ -105,28 +65,20 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     date: {
-        flex: 1,
-        // borderWidth: 1,
-        borderColor: 'red',        
+        flex: 1,        
     },
     temp: {
         flex: 1,
-        // borderWidth: 1,
-        borderColor: 'red',
         justifyContent: "center",
         alignItems: "center",
     },
     description: {
         flex: 2,
-        // borderWidth: 1,
-        borderColor: 'red',
         justifyContent: "center",
         alignItems: "center",
     },
     icon: {
         flex: 1,
-        // borderWidth: 1,
-        borderColor: 'red',
         justifyContent: "center",
         alignItems: "center",
     },

@@ -7,6 +7,19 @@ import Weather from "./weather";
 
 const API_KEY = '32da35c7fdfa601889d7046e111d7cd3'
 
+function getDailyAverages(list) {
+  const result = [];
+
+  for (let i = 8; i < 40; i += 8) {
+    const dayGroup = list.slice(i, i + 8);
+    const avgTemp =
+      dayGroup.reduce((sum, item) => sum + item.main.temp, 0) / dayGroup.length;
+    result.push(Math.round(avgTemp));
+  }
+
+  return result;
+}
+
 export default function App() {
 
   const [isLoading, setIsLoading] = useState(true)
@@ -28,20 +41,6 @@ export default function App() {
 
     const {data: {list}} = await axios.get(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`)
     console.log('got data2')
-
-
-    function getDailyAverages(list) {
-      const result = [];
-    
-      for (let i = 8; i < 40; i += 8) {
-        const dayGroup = list.slice(i, i + 8);
-        const avgTemp =
-          dayGroup.reduce((sum, item) => sum + item.main.temp, 0) / dayGroup.length;
-        result.push(Math.round(avgTemp));
-      }
-    
-      return result;
-    }
     
     const averageTemps = getDailyAverages(list);
     console.log(averageTemps)

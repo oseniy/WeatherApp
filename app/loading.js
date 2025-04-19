@@ -1,7 +1,7 @@
 import { Text, View, StyleSheet, StatusBar } from "react-native";
 import React, { useState, useEffect } from 'react';
 
-export default function loading() {
+export default function Loading() {
 
   const [dots, setDots] = useState('...');
 
