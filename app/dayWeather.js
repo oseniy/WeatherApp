@@ -1,16 +1,8 @@
 import { Text, View, StyleSheet, } from "react-native";
 import PropTypes from 'prop-types';
 import Ionicons from '@expo/vector-icons/Ionicons';
-
-const weatherOptions = {
-    Clear: 'sunny',
-    Thunderstorm: 'thunderstorm',
-    Drizzle: 'rainy-outline',
-    Rain: 'rainy',
-    Snow: 'snow',
-    Atmosphere: 'cloudy-outline',
-    Clouds: 'cloud',
-}
+import { fonts } from "./constants/fonts";
+import { weatherOptions } from "./constants/weatherOptions";
 
 function formatUnixDate(unixTimestamp) {
     const date = new Date(unixTimestamp * 1000);
@@ -28,16 +20,16 @@ export default function DayWeather({daysData}) {
             {daysData.map((day, i) => (
                 <View key={i} style={styles.day}>
                     <View style={styles.date}>
-                        <Text style={styles.text}>{formatUnixDate(day.dt)}</Text>
+                        <Text style={fonts.small}>{formatUnixDate(day.dt)}</Text>
                     </View>
                     <View style={styles.temp}>
-                        <Text style={styles.temp_text}>{day.temp}°</Text>
+                        <Text style={fonts.medium}>{day.temp}°</Text>
                     </View>
                     <View style={styles.description}>
-                        <Text style={styles.text}>{day.description}</Text>
+                        <Text style={fonts.small}>{day.description}</Text>
                     </View>
                     <View style={styles.icon}>
-                        <Ionicons name={weatherOptions[day.main]} size={56} color="white" />
+                        <Ionicons name={weatherOptions[day.main].iconName} size={56} color="white" />
                     </View>
                 </View>
             ))}
@@ -82,12 +74,4 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
-    text: {
-        fontSize: 24,
-        color: "white",
-    },
-    temp_text: {
-        fontSize: 32,
-        color: "white",        
-    }
 })

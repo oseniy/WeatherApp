@@ -1,7 +1,7 @@
 import { View, StyleSheet, Alert} from "react-native";
 import React, { useState, useEffect } from 'react';
 import * as Location from 'expo-location';
-import axios from 'axios'
+import axios from 'axios';
 import Loading from "./loading";
 import Weather from "./weather";
 

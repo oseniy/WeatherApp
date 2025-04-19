@@ -1,5 +1,6 @@
 import { Text, View, StyleSheet, StatusBar } from "react-native";
 import React, { useState, useEffect } from 'react';
+import { fonts } from "./constants/fonts";
 
 export default function Loading() {
 
@@ -20,8 +21,8 @@ export default function Loading() {
       <View style={styles.container} >
         <StatusBar barStyle="dark-content" backgroundColor="#87CEFA"/>
         <View style={styles.textContainer}>
-          <Text style={styles.text}>Получение данных о погоде</Text>
-          <Text style={styles.dots}>{dots}</Text>
+          <Text style={fonts.small}>Получение данных о погоде</Text>
+          <Text style={fonts.medium}>{dots}</Text>
         </View>
         <View style={styles.subContainer} ></View>
       </View>
@@ -44,12 +45,4 @@ export default function Loading() {
     subContainer: {
       flex: 3
     },
-    text: {
-      fontSize: 22,
-      color: "white"
-    },
-    dots: {
-      fontSize: 32,
-      color: "white"      
-    }
   })
