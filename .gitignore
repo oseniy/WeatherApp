@@ -3,6 +3,9 @@
 # dependencies
 node_modules/
 
+# VS Code
+.vscode/
+
 # Expo
 .expo/
 dist/
@@ -36,3 +39,15 @@ yarn-error.*
 *.tsbuildinfo
 
 app-example
+
+# build artifacts
+*.apk
+
+# logs
+*.log
+
+# Expo shared (e.g. for CameraRoll)
+.expo-shared/
+
+# Android keystore
+*.keystore
